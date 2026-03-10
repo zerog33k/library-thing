@@ -8,7 +8,7 @@ Defines Android Kotlin Compose implementation details for the same behavior cont
 - Seed data uses one canonical repo file (`/data/sci-fi-library-mock-data.json`) copied into Android assets during build.
 - Member management read-only.
 - Bottom navigation with three tabs: Books, Overdue, Members.
-- Checkout and return flows are modal bottom sheets/dialogs.
+- Checkout and return flows are centered modal dialogs.
 
 ## 3) Data model
 - `data class Book(id, title, author, isbn, genre, year, coverImageUrl, isAvailable, currentCheckoutId)`
@@ -128,14 +128,16 @@ onContactAckConfirm():
 - If availability changes during modal flow, show an error and close or reset checkout intent.
 
 ## 9) Suggested file structure
-- `data/SeedDataLoader.kt`
-- `data/models.kt`
-- `ui/viewmodel/LibraryViewModel.kt`
-- `ui/state/LibraryUiState.kt`
-- `ui/navigation/MainActivity.kt` or `App.kt` with nav host
-- `ui/screens/BooksScreen.kt`, `OverdueScreen.kt`, `MembersScreen.kt`
-- `ui/components/CheckoutSheet.kt`, `ReturnSheet.kt`, `ContactAckSheet.kt`, `BookRow.kt`, `BottomTabs.kt`, `EmptyState.kt`
+- `MainActivity.kt`
+- `LibraryViewModel.kt` (domain state, selectors, actions)
+- `LibraryApp.kt` (tabs, screens, dialogs)
+- `ui/theme/` (Compose theme)
 - `app/build.gradle(.kts)` copy task that syncs `/data/sci-fi-library-mock-data.json` into merged assets
+
+## 11) Build verification
+- Project scaffold path: `/Users/zerogeek/code/library-thing/android-app`
+- Build command: `./gradlew :app:assembleDebug`
+- Expected artifact: `android-app/app/build/outputs/apk/debug/app-debug.apk`
 
 ## 10) Acceptance criteria
 - Checkout gate blocks and confirms when needed.
