@@ -51,9 +51,9 @@ cd android-app
 
 ## Documentation
 Start with:
-- `docs/library-book-checkout-business-analysis.md`
+- [Business analysis](docs/library-book-checkout-business-analysis.md)
 
 Platform-specific docs:
-- `docs/library-book-checkout-implementation-rn.md`
-- `docs/library-book-checkout-implementation-swiftui.md`
-- `docs/library-book-checkout-implementation-compose.md`
+- [React Native implementation spec](docs/library-book-checkout-implementation-rn.md)
+- [SwiftUI implementation spec](docs/library-book-checkout-implementation-swiftui.md)
+- [Android Compose implementation spec](docs/library-book-checkout-implementation-compose.md)
