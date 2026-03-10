@@ -5,7 +5,7 @@ Defines Android Kotlin Compose implementation details for the same behavior cont
 
 ## 2) Assumptions
 - No authentication implementation in v1.
-- Seed data loaded from bundled JSON asset.
+- Seed data uses one canonical repo file (`/data/sci-fi-library-mock-data.json`) copied into Android assets during build.
 - Member management read-only.
 - Bottom navigation with three tabs: Books, Overdue, Members.
 - Checkout and return flows are modal bottom sheets/dialogs.
@@ -135,7 +135,7 @@ onContactAckConfirm():
 - `ui/navigation/MainActivity.kt` or `App.kt` with nav host
 - `ui/screens/BooksScreen.kt`, `OverdueScreen.kt`, `MembersScreen.kt`
 - `ui/components/CheckoutSheet.kt`, `ReturnSheet.kt`, `ContactAckSheet.kt`, `BookRow.kt`, `BottomTabs.kt`, `EmptyState.kt`
-- `assets/sci-fi-library-mock-data.json`
+- `app/build.gradle(.kts)` copy task that syncs `/data/sci-fi-library-mock-data.json` into merged assets
 
 ## 10) Acceptance criteria
 - Checkout gate blocks and confirms when needed.

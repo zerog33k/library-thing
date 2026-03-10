@@ -12,8 +12,10 @@ targets:
     platform: iOS
     sources:
       - path: LibraryApp
-    resources:
-      - path: Resources/sci-fi-library-mock-data.json
+    preBuildScripts:
+      - name: Copy Shared Seed Data
+        script: |
+          "$SRCROOT/scripts/copy-shared-seed-data.sh"
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.interview.libraryapp

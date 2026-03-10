@@ -22,8 +22,9 @@ open LibraryApp.xcodeproj
 
 - `Project.yml` — XcodeGen spec used to generate `LibraryApp.xcodeproj`
 - `LibraryApp.xcodeproj` — generated Xcode project
-- `LibraryApp/` — SwiftUI app code and assets
-- `Resources/` — seeded Sci-Fi JSON file used for app data
+- `LibraryApp/` — SwiftUI app code
+- `scripts/copy-shared-seed-data.sh` — pre-build copy from shared root data into app bundle
+- `../data/sci-fi-library-mock-data.json` — canonical seed JSON shared by all platforms
 
 ## Re-run project generation
 
@@ -35,4 +36,3 @@ xcodegen generate
 ```
 
 Then reopen `LibraryApp.xcodeproj`.
-

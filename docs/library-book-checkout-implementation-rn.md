@@ -6,6 +6,7 @@ This specification defines a concrete React Native implementation for the librar
 ## 2) Assumptions
 - Librarian is already logged in.
 - No backend; all data is local and seeded from `data/sci-fi-library-mock-data.json`.
+- Canonical seed file lives at repo root (`/data/sci-fi-library-mock-data.json`) and is synced into RN generated data path before `start`/`ios`/`android`/`web`/`test`.
 - Member management is read-only and informational.
 - Bottom tab navigation with:
   - `Books`
@@ -191,7 +192,8 @@ This ensures race-safety after modal interactions.
 - `src/store/index.ts`, `src/store/librarySlice.ts`, `src/store/selectors.ts`, `src/store/hooks.ts`
 - `src/screens/BooksScreen.tsx`, `OverdueScreen.tsx`, `MembersScreen.tsx`
 - `src/components/CheckoutModal.tsx`, `ReturnModal.tsx`, `ContactAcknowledgeModal.tsx`, `BookCard.tsx`, `EmptyState.tsx`
-- `src/data/sci-fi-library-mock-data.json`
+- `src/data/generated/sci-fi-library-mock-data.json` (generated, not checked in)
+- `scripts/sync-shared-data.sh` (copies root `/data` JSON into `src/data/generated/`)
 - `src/types.ts`
 
 ## 10) Acceptance criteria

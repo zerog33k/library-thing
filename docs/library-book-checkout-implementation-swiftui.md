@@ -4,7 +4,7 @@
 This document defines a concrete SwiftUI implementation of the library checkout app, matching the product requirements and RN behavior.
 
 ## 2) Assumptions
-- App is local-first with seeded JSON in app bundle.
+- App is local-first with seeded JSON copied into app bundle from shared repo data.
 - Librarian is authenticated contextually; no login implementation.
 - Member management is read-only.
 - Navigation uses `TabView` with bottom tabs.
@@ -119,12 +119,12 @@ Use value types:
 - `Views/ReturnSheet.swift`
 - `Views/BookRow.swift`, `EmptyStateView.swift`
 - `Models.swift`
-- `Resources/sci-fi-library-mock-data.json`
+- `scripts/copy-shared-seed-data.sh` (copies root `/data` JSON into bundle resources at build)
 
 ## 10) Local seed strategy
-- Load JSON into `LibraryStore` at launch with defensive loading:
-  - Attempt `Bundle.main` JSON load first (`sci-fi-library-mock-data.json`).
-  - If bundle load fails, fallback to in-code embedded seed payload so the app still renders data.
+- Keep one canonical seed file in repo root: `/data/sci-fi-library-mock-data.json`.
+- Copy canonical file to app bundle in a target pre-build script.
+- Load `sci-fi-library-mock-data.json` from `Bundle.main` at launch.
 - Convert dates consistently; prefer ISO date strings internally to stay aligned with RN data structure.
 - Tabs and navigation rely on standard SwiftUI `NavigationStack + TabView` components with inline bar style so safe-area behavior matches OS defaults.
 

@@ -2,6 +2,10 @@ import Foundation
 
 @MainActor
 final class LibraryStore: ObservableObject {
+  private enum SeedLoadError: Error {
+    case missingBundleResource
+  }
+
   @Published var books: [Book] = []
   @Published var members: [Member] = []
   @Published var checkouts: [Checkout] = []
@@ -23,14 +27,10 @@ final class LibraryStore: ObservableObject {
   }
 
   private static func loadSeedJSONData() throws -> Data {
-    if let url = Bundle.main.url(forResource: "sci-fi-library-mock-data", withExtension: "json") {
-      do {
-        return try Data(contentsOf: url)
-      } catch {
-        print("Bundle seed file read failed, trying embedded seed: \(error)")
-      }
+    guard let url = Bundle.main.url(forResource: "sci-fi-library-mock-data", withExtension: "json") else {
+      throw SeedLoadError.missingBundleResource
     }
-    return Data(embeddedSeedJSON.utf8)
+    return try Data(contentsOf: url)
   }
 
   func setActiveTab(_ tab: ActiveTab) {
