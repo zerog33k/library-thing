@@ -1,0 +1,42 @@
+name: LibraryApp
+options:
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  developmentRegion: en
+  groupSortPosition: top
+
+targets:
+  LibraryApp:
+    type: application
+    platform: iOS
+    sources:
+      - path: LibraryApp
+    resources:
+      - path: Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.interview.libraryapp
+        INFOPLIST_FILE: LibraryApp/Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_STYLE: Automatic
+    info:
+      path: LibraryApp/Info.plist
+      properties:
+        CFBundleDisplayName: Library App
+        UIApplicationSupportsIndirectInputEvents: true
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: true
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+schemes:
+  LibraryApp:
+    build:
+      targets:
+        LibraryApp: all
+    run:
+      config: Debug
