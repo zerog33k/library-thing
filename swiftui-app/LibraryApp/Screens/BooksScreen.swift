@@ -53,116 +53,114 @@ struct BooksScreen: View {
 
   var body: some View {
     ScrollViewReader { proxy in
-      GeometryReader { geometry in
-        ScrollView {
-          VStack(alignment: .leading, spacing: 12) {
-            overviewSection
-              .id("books-overview")
+      ScrollView {
+        VStack(alignment: .leading, spacing: 12) {
+          overviewSection
+            .id("books-overview")
 
-            if showSearchPanel {
-              searchPanel
-            }
+          if showSearchPanel {
+            searchPanel
+          }
 
-            if let message = emptyMessage {
-              EmptyStateView(message: message)
-                .padding(.horizontal, 8)
-            } else {
-              LazyVStack(spacing: 10) {
-                ForEach(filteredBooks) { book in
-                  let checkout = book.currentCheckoutId.flatMap(store.checkoutById)
-                  BookRowView(
-                    book: book,
-                    checkout: checkout,
-                    onCheckout: {
-                      checkoutError = nil
-                      selectedMemberId = nil
-                      store.openCheckoutModal(for: book.id)
-                    },
-                    onReturn: {
-                      if let checkoutId = book.currentCheckoutId {
-                        store.openReturnModal(for: checkoutId)
-                      }
-                    },
-                  )
-                }
+          if let message = emptyMessage {
+            EmptyStateView(message: message)
+              .padding(.horizontal, 8)
+          } else {
+            VStack(spacing: 10) {
+              ForEach(filteredBooks) { book in
+                let checkout = book.currentCheckoutId.flatMap(store.checkoutById)
+                BookRowView(
+                  book: book,
+                  checkout: checkout,
+                  onCheckout: {
+                    checkoutError = nil
+                    selectedMemberId = nil
+                    store.openCheckoutModal(for: book.id)
+                  },
+                  onReturn: {
+                    if let checkoutId = book.currentCheckoutId {
+                      store.openReturnModal(for: checkoutId)
+                    }
+                  },
+                )
               }
             }
           }
-          .frame(maxWidth: .infinity, alignment: .leading)
-          .frame(minHeight: geometry.size.height, alignment: .top)
-          .padding(.horizontal, 16)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color(.systemBackground))
-        .overlay(alignment: .top, content: {
-          if let book = checkoutBook {
-            CheckoutModal(
-              bookTitle: book.title,
-              members: store.members,
-              selectedMemberId: $selectedMemberId,
-              isEnabled: true,
-              message: "Selected member: \(selectedMemberForMessage)",
-              onCancel: {
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 16)
+        .padding(.bottom, 8)
+      }
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+      .background(Color(.systemBackground))
+      .overlay(alignment: .top, content: {
+        if let book = checkoutBook {
+          CheckoutModal(
+            bookTitle: book.title,
+            members: store.members,
+            selectedMemberId: $selectedMemberId,
+            isEnabled: true,
+            message: "Selected member: \(selectedMemberForMessage)",
+            onCancel: {
+              selectedMemberId = nil
+              checkoutError = nil
+              store.closeModals()
+            },
+            onConfirm: {
+              guard let memberId = selectedMemberId else {
+                checkoutError = "Select a member to continue."
+                return
+              }
+
+              let result = store.startCheckout(bookId: book.id, memberId: memberId)
+              switch result {
+              case .completed:
                 selectedMemberId = nil
                 checkoutError = nil
-                store.closeModals()
-              },
-              onConfirm: {
-                guard let memberId = selectedMemberId else {
-                  checkoutError = "Select a member to continue."
-                  return
-                }
-
-                let result = store.startCheckout(bookId: book.id, memberId: memberId)
-                switch result {
-                case .completed:
-                  selectedMemberId = nil
-                  checkoutError = nil
-                case .needsContactAcknowledgement:
-                  checkoutError = nil
-                case .unavailable:
-                  checkoutError = "This book is no longer available."
-                }
-              },
-            )
-            .overlay(alignment: .topTrailing) {
-              if let error = checkoutError {
-                Text(error)
-                  .padding(6)
-                  .foregroundColor(.red)
-                  .font(.caption)
-                  .background(
-                    RoundedRectangle(cornerRadius: 8)
-                      .fill(Color.yellow.opacity(0.15)),
-                  )
-                  .padding(.top, 6)
-                  .padding(.trailing, 12)
-              }
-            }
-          } else if store.ui.contactAckBookId != nil {
-            ContactAcknowledgementModal {
-              let success = store.confirmContactAcknowledgement()
-              if !success {
+              case .needsContactAcknowledgement:
+                checkoutError = nil
+              case .unavailable:
                 checkoutError = "This book is no longer available."
               }
-              selectedMemberId = nil
+            },
+          )
+          .overlay(alignment: .topTrailing) {
+            if let error = checkoutError {
+              Text(error)
+                .padding(6)
+                .foregroundColor(.red)
+                .font(.caption)
+                .background(
+                  RoundedRectangle(cornerRadius: 8)
+                    .fill(Color.yellow.opacity(0.15)),
+                )
+                .padding(.top, 6)
+                .padding(.trailing, 12)
             }
           }
-        })
-        .navigationTitle("Books")
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-          ToolbarItem(placement: .navigationBarTrailing) {
-            Button(action: showSearchPanelAction) {
-              Image(systemName: showSearchPanel ? "xmark" : "magnifyingglass")
+        } else if store.ui.contactAckBookId != nil {
+          ContactAcknowledgementModal {
+            let success = store.confirmContactAcknowledgement()
+            if !success {
+              checkoutError = "This book is no longer available."
             }
+            selectedMemberId = nil
           }
         }
-        .onChange(of: showSearchPanel) { shown in
-          if shown {
-            withAnimation {
-              proxy.scrollTo("books-overview", anchor: .top)
-            }
+      })
+      .navigationTitle("Books")
+      .navigationBarTitleDisplayMode(.inline)
+      .toolbar {
+        ToolbarItem(placement: .navigationBarTrailing) {
+          Button(action: showSearchPanelAction) {
+            Image(systemName: showSearchPanel ? "xmark" : "magnifyingglass")
+          }
+        }
+      }
+      .onChange(of: showSearchPanel) { shown in
+        if shown {
+          withAnimation {
+            proxy.scrollTo("books-overview", anchor: .top)
           }
         }
       }

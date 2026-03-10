@@ -8,35 +8,33 @@ struct OverdueScreen: View {
   }
 
   var body: some View {
-    GeometryReader { geometry in
-      ScrollView {
-        VStack(spacing: 10) {
-          if overdue.isEmpty {
-            EmptyStateView(message: "No overdue books.")
-              .padding(.top, 8)
-          } else {
-            if store.uncontactedOverdueCheckouts.isEmpty {
-              Text("No uncontacted overdue books.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 8)
-            }
-
-            LazyVStack(spacing: 10) {
-              ForEach(overdue) { checkout in
-                OverdueRow(checkout: checkout, store: store)
-              }
-            }
-            .padding(.horizontal, 16)
+    ScrollView {
+      VStack(spacing: 10) {
+        if overdue.isEmpty {
+          EmptyStateView(message: "No overdue books.")
+            .padding(.top, 8)
+        } else {
+          if store.uncontactedOverdueCheckouts.isEmpty {
+            Text("No uncontacted overdue books.")
+              .font(.subheadline)
+              .foregroundColor(.secondary)
+              .frame(maxWidth: .infinity, alignment: .leading)
+              .padding(.horizontal, 8)
           }
+
+          VStack(spacing: 10) {
+            ForEach(overdue) { checkout in
+              OverdueRow(checkout: checkout, store: store)
+            }
+          }
+          .padding(.horizontal, 16)
         }
-        .frame(maxWidth: .infinity, alignment: .topLeading)
-        .frame(minHeight: geometry.size.height, alignment: .top)
       }
-      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-      .background(Color(.systemBackground))
+      .frame(maxWidth: .infinity, alignment: .topLeading)
+      .padding(.bottom, 8)
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    .background(Color(.systemBackground))
     .navigationTitle("Overdue")
     .navigationBarTitleDisplayMode(.inline)
   }

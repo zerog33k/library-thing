@@ -4,27 +4,25 @@ struct MembersScreen: View {
   @EnvironmentObject private var store: LibraryStore
 
   var body: some View {
-    GeometryReader { geometry in
-      ScrollView {
-        VStack(spacing: 10) {
-          if store.members.isEmpty {
-            EmptyStateView(message: "No members available.")
-              .padding(.top, 8)
-          } else {
-            LazyVStack(spacing: 10) {
-              ForEach(store.members) { member in
-                MemberRow(member: member, store: store)
-              }
+    ScrollView {
+      VStack(spacing: 10) {
+        if store.members.isEmpty {
+          EmptyStateView(message: "No members available.")
+            .padding(.top, 8)
+        } else {
+          VStack(spacing: 10) {
+            ForEach(store.members) { member in
+              MemberRow(member: member, store: store)
             }
-            .padding(.horizontal, 16)
           }
+          .padding(.horizontal, 16)
         }
-        .frame(maxWidth: .infinity, alignment: .topLeading)
-        .frame(minHeight: geometry.size.height, alignment: .top)
       }
-      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-      .background(Color(.systemBackground))
+      .frame(maxWidth: .infinity, alignment: .topLeading)
+      .padding(.bottom, 8)
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+    .background(Color(.systemBackground))
     .navigationTitle("Members")
     .navigationBarTitleDisplayMode(.inline)
   }

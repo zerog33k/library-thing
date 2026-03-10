@@ -33,14 +33,5 @@ struct LibraryAppApp: App {
     navBar.standardAppearance = navAppearance
     navBar.compactAppearance = navAppearance
     navBar.scrollEdgeAppearance = navAppearance
-
-    let tabAppearance = UITabBarAppearance()
-    tabAppearance.configureWithOpaqueBackground()
-    tabAppearance.backgroundColor = .systemBackground
-
-    let tabBar = UITabBar.appearance()
-    tabBar.isTranslucent = false
-    tabBar.standardAppearance = tabAppearance
-    tabBar.scrollEdgeAppearance = tabAppearance
   }
 }
