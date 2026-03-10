@@ -97,6 +97,7 @@ struct BooksScreen: View {
             bookTitle: book.title,
             members: store.members,
             selectedMemberId: $selectedMemberId,
+            isEnabled: true,
             message: "Selected member: \(selectedMemberForMessage)",
             onCancel: {
               selectedMemberId = nil
@@ -120,7 +121,6 @@ struct BooksScreen: View {
                 checkoutError = "This book is no longer available."
               }
             },
-            isEnabled: true,
           )
           .overlay(alignment: .topTrailing) {
             if let error = checkoutError {
