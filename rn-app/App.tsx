@@ -7,12 +7,13 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Ionicons } from '@expo/vector-icons'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { store } from './src/store'
-import { initializeLibrary, setActiveTab } from './src/store/librarySlice'
+import { initializeLibrary, setActiveTab, closeModal, returnBook } from './src/store/librarySlice'
 import { selectUncontactedOverdueCheckouts } from './src/store/selectors'
 import { seedData } from './src/data'
 import { BooksScreen } from './src/screens/BooksScreen'
 import { OverdueScreen } from './src/screens/OverdueScreen'
 import { MembersScreen } from './src/screens/MembersScreen'
+import { ReturnModal } from './src/components/ReturnModal'
 import { useAppDispatch, useAppSelector } from './src/store/hooks'
 import type { TabName } from './src/types'
 
@@ -33,6 +34,13 @@ function LibraryRoot() {
   const activeTab = useAppSelector((state) => state.library.ui.activeTab)
   const overdueUncontactedCount = useAppSelector((state) => selectUncontactedOverdueCheckouts(state).length)
   const initialized = useAppSelector((state) => state.library.books.length > 0)
+  const books = useAppSelector((state) => state.library.books)
+  const members = useAppSelector((state) => state.library.members)
+  const checkouts = useAppSelector((state) => state.library.checkouts)
+  const returnCheckoutId = useAppSelector((state) => state.library.ui.returnCheckoutId)
+  const returnCheckout = returnCheckoutId ? checkouts.find((item) => item.id === returnCheckoutId) || null : null
+  const returnCheckoutBook = returnCheckout ? books.find((item) => item.id === returnCheckout.bookId) || null : null
+  const returnMember = returnCheckout ? members.find((member) => member.id === returnCheckout.memberId) || null : null
 
   useEffect(() => {
     if (!initialized) {
@@ -97,6 +105,20 @@ function LibraryRoot() {
             }}
           />
         </Tabs.Navigator>
+
+        <ReturnModal
+          visible={Boolean(returnCheckoutId)}
+          checkout={returnCheckout}
+          book={returnCheckoutBook}
+          member={returnMember}
+          onCancel={() => dispatch(closeModal())}
+          onConfirm={() => {
+            if (returnCheckoutId) {
+              dispatch(returnBook(returnCheckoutId))
+            }
+            dispatch(closeModal())
+          }}
+        />
       </NavigationContainer>
     </SafeAreaProvider>
   )

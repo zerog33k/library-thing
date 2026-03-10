@@ -17,7 +17,6 @@ import {
   openReturnModal,
   closeModal,
   checkoutBook,
-  returnBook,
   contactMemberOverdueCheckouts,
   openContactAcknowledgement,
 } from '../store/librarySlice'
@@ -30,10 +29,8 @@ import { addDaysISO, todayISO } from '../utils/date'
 import { BookCard } from '../components/BookCard'
 import { EmptyState } from '../components/EmptyState'
 import { CheckoutModal } from '../components/CheckoutModal'
-import { ReturnModal } from '../components/ReturnModal'
 import { ContactAcknowledgeModal } from '../components/ContactAcknowledgeModal'
 import type { FilterType } from '../types'
-import type { Checkout } from '../types'
 
 const filterLabels: Array<{ label: string; value: FilterType }> = [
   { label: 'All', value: 'all' },
@@ -104,9 +101,7 @@ export function BooksScreen() {
   const books = useAppSelector((state) => state.library.books)
   const members = useAppSelector((state) => state.library.members)
   const checkouts = useAppSelector((state) => state.library.checkouts)
-  const { checkoutModalBookId, returnCheckoutId, contactAckBookId, contactAckMemberId } = useAppSelector(
-    (state) => state.library.ui,
-  )
+  const { checkoutModalBookId, contactAckBookId, contactAckMemberId } = useAppSelector((state) => state.library.ui)
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null)
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [showSearchPanel, setShowSearchPanel] = useState(false)
@@ -121,14 +116,6 @@ export function BooksScreen() {
 
   const checkoutBookData = checkoutModalBookId
     ? books.find((book) => book.id === checkoutModalBookId)
-    : null
-
-  const returnCheckout: Checkout | null = returnCheckoutId
-    ? checkouts.find((item) => item.id === returnCheckoutId) || null
-    : null
-
-  const returnMember = returnCheckout
-    ? members.find((member) => member.id === returnCheckout.memberId) || null
     : null
 
   const filteredMessage = (() => {
@@ -207,8 +194,6 @@ export function BooksScreen() {
 
     executeCheckout(contactAckBookId, contactAckMemberId)
   }
-
-  const returnCheckoutBook = returnCheckout?.bookId != null ? books.find((item) => item.id === returnCheckout.bookId) || null : null
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -290,20 +275,6 @@ export function BooksScreen() {
       <ContactAcknowledgeModal
         visible={Boolean(contactAckBookId)}
         onConfirm={handleContactAcknowledged}
-      />
-
-      <ReturnModal
-        visible={Boolean(returnCheckoutId)}
-        checkout={returnCheckout}
-        book={returnCheckoutBook}
-        member={returnMember}
-        onCancel={() => dispatch(closeModal())}
-        onConfirm={() => {
-          if (returnCheckout) {
-            dispatch(returnBook(returnCheckout.id))
-          }
-          dispatch(closeModal())
-        }}
       />
 
       {checkoutError ? <Text style={styles.error}>{checkoutError}</Text> : null}
