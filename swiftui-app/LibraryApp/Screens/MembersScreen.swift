@@ -22,9 +22,6 @@ struct MembersScreen: View {
     .contentMargins(.vertical, 0, for: .scrollContent)
     .navigationTitle("Members")
     .navigationBarTitleDisplayMode(.inline)
-    .onAppear {
-      store.setActiveTab(.members)
-    }
   }
 }
 
