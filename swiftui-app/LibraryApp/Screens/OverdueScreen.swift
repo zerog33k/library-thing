@@ -31,6 +31,7 @@ struct OverdueScreen: View {
         }
       }
     }
+    .contentMargins(.vertical, 0, for: .scrollContent)
     .navigationTitle("Overdue")
     .navigationBarTitleDisplayMode(.inline)
     .onAppear {

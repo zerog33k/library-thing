@@ -89,6 +89,7 @@ struct BooksScreen: View {
         }
         .padding(.horizontal, 16)
       }
+      .contentMargins(.vertical, 0, for: .scrollContent)
       .overlay(alignment: .top, content: {
         if let book = checkoutBook {
           CheckoutModal(

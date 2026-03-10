@@ -8,8 +8,6 @@ struct ContentView: View {
       TabView(selection: $store.ui.activeTab) {
         NavigationStack {
           BooksScreen()
-            .navigationTitle("Books")
-            .onAppear { store.setActiveTab(.books) }
         }
         .tabItem {
           Label("Books", systemImage: "books.vertical.fill")
@@ -18,8 +16,6 @@ struct ContentView: View {
 
         NavigationStack {
           OverdueScreen()
-            .navigationTitle("Overdue")
-            .onAppear { store.setActiveTab(.overdue) }
         }
         .tabItem {
           Label("Overdue", systemImage: "exclamationmark.circle.fill")
@@ -29,8 +25,6 @@ struct ContentView: View {
 
         NavigationStack {
           MembersScreen()
-            .navigationTitle("Members")
-            .onAppear { store.setActiveTab(.members) }
         }
         .tabItem {
           Label("Members", systemImage: "person.3.fill")
