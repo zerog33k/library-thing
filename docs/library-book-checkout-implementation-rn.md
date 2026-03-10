@@ -47,6 +47,7 @@ This specification defines a concrete React Native implementation for the librar
 
 ### 3.2 Checkout modal
 - Trigger: `Check out` action.
+- Presentation: centered dialog-style modal (non-bottom-sheet), with dimmed backdrop and fixed content card.
 - Fields shown:
   - Book title
   - member picker list (required selection)
