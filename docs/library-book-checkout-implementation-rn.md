@@ -27,11 +27,12 @@ This specification defines a concrete React Native implementation for the librar
   - Total books
   - Available count
   - Checked out count
+  - Overview row is in the scrollable list content (not fixed at top), so it scrolls with results.
 - Search/filter panel (hidden by default):
   - Search input: case-insensitive title filter.
   - Filter chips: `All`, `Available`, `Checked out`, `Overdue`.
   - Tap the search icon again to dismiss the panel.
-- The books overview text appears once in the content area directly below the header and is not duplicated elsewhere.
+- The books overview text appears once in scrollable content directly below the header and is not duplicated elsewhere.
 - Book card:
   - title, author
   - status label: `Available`, `Checked out`, or `Overdue`

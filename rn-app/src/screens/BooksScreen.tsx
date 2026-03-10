@@ -170,13 +170,11 @@ export function BooksScreen() {
     })
   }, [navigation, showSearchPanel])
 
-  return (
-    <View style={styles.container}>
-      <View>
-        <Text style={styles.counts}>
-          Overview • Total: {counts.all} · Available: {counts.available} · Checked out: {counts.checkedOut}
-        </Text>
-      </View>
+  const renderListHeader = () => (
+    <View>
+      <Text style={styles.counts}>
+        Overview • Total: {counts.all} · Available: {counts.available} · Checked out: {counts.checkedOut}
+      </Text>
       {showSearchPanel ? (
         <View style={styles.searchPanel}>
           <View style={styles.searchField}>
@@ -205,10 +203,16 @@ export function BooksScreen() {
           </View>
         </View>
       ) : null}
+    </View>
+  )
+
+  return (
+    <View style={styles.container}>
       <FlatList
         data={filteredBooks}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
+        ListHeaderComponent={renderListHeader}
         ListEmptyComponent={filteredMessage ? <EmptyState message={filteredMessage} /> : null}
         renderItem={({ item }) => {
           const checkout = item.currentCheckoutId
