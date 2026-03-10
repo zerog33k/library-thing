@@ -1,5 +1,12 @@
 # Library Checkout Interview App
 
+## Development methodology
+This app was built in phases to reduce rework and keep behavior consistent across platforms:
+- Started with a detailed product/specification document.
+- Produced a detailed React Native implementation document.
+- Built and iterated on the React Native app first.
+- Used the RN implementation and behavior as the baseline to create the SwiftUI and Kotlin/Compose versions with minimal overhead.
+
 ## Overview
 This repository contains a small cross-platform library checkout app built for interview exercises.
 
