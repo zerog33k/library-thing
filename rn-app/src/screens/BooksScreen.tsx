@@ -42,6 +42,60 @@ const filterLabels: Array<{ label: string; value: FilterType }> = [
   { label: 'Overdue', value: 'overdue' },
 ]
 
+type BooksListHeaderProps = {
+  counts: { all: number; available: number; checkedOut: number }
+  showSearchPanel: boolean
+  activeFilter: FilterType
+  search: string
+  onSearchChange: (value: string) => void
+  onFilterChange: (value: FilterType) => void
+}
+
+const BooksListHeader = React.memo(function BooksListHeader({
+  counts,
+  showSearchPanel,
+  search,
+  activeFilter,
+  onSearchChange,
+  onFilterChange,
+}: BooksListHeaderProps) {
+  return (
+    <View>
+      <Text style={styles.counts}>
+        Overview • Total: {counts.all} · Available: {counts.available} · Checked out: {counts.checkedOut}
+      </Text>
+      {showSearchPanel ? (
+        <View style={styles.searchPanel}>
+          <View style={styles.searchField}>
+            <Ionicons name="search-outline" size={18} color="#64748b" style={styles.inlineIcon} />
+            <TextInput
+              defaultValue={search}
+              onChangeText={onSearchChange}
+              placeholder="Search by title"
+              style={styles.search}
+              clearButtonMode="while-editing"
+            />
+          </View>
+
+          <View style={styles.filterRow}>
+            {filterLabels.map((item) => (
+              <TouchableOpacity
+                key={item.value}
+                style={[styles.filterChip, activeFilter === item.value && styles.filterChipActive]}
+                onPress={() => onFilterChange(item.value)}
+              >
+                <Text style={[styles.filterText, activeFilter === item.value && styles.filterTextActive]}>
+                  {item.label}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      ) : null}
+    </View>
+  )
+})
+
 export function BooksScreen() {
   const navigation = useNavigation()
   const dispatch = useAppDispatch()
@@ -170,49 +224,22 @@ export function BooksScreen() {
     })
   }, [navigation, showSearchPanel])
 
-  const renderListHeader = () => (
-    <View>
-      <Text style={styles.counts}>
-        Overview • Total: {counts.all} · Available: {counts.available} · Checked out: {counts.checkedOut}
-      </Text>
-      {showSearchPanel ? (
-        <View style={styles.searchPanel}>
-          <View style={styles.searchField}>
-            <Ionicons name="search-outline" size={18} color="#64748b" style={styles.inlineIcon} />
-            <TextInput
-              value={search}
-              onChangeText={(value) => dispatch(setSearchQuery(value))}
-              placeholder="Search by title"
-              style={styles.search}
-              clearButtonMode="while-editing"
-            />
-          </View>
-
-          <View style={styles.filterRow}>
-            {filterLabels.map((item) => (
-              <TouchableOpacity
-                key={item.value}
-                style={[styles.filterChip, activeFilter === item.value && styles.filterChipActive]}
-                onPress={() => dispatch(setActiveFilter(item.value))}
-              >
-                <Text style={[styles.filterText, activeFilter === item.value && styles.filterTextActive]}>
-                  {item.label}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </View>
-      ) : null}
-    </View>
-  )
-
   return (
     <View style={styles.container}>
       <FlatList
         data={filteredBooks}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
-        ListHeaderComponent={renderListHeader}
+        ListHeaderComponent={
+          <BooksListHeader
+            counts={counts}
+            showSearchPanel={showSearchPanel}
+            search={search}
+            activeFilter={activeFilter}
+            onSearchChange={(value) => dispatch(setSearchQuery(value))}
+            onFilterChange={(value) => dispatch(setActiveFilter(value))}
+          />
+        }
         ListEmptyComponent={filteredMessage ? <EmptyState message={filteredMessage} /> : null}
         renderItem={({ item }) => {
           const checkout = item.currentCheckoutId
