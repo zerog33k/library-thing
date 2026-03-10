@@ -3,6 +3,10 @@
 ## Overview
 This repository contains a small cross-platform library checkout app built for interview exercises.
 
+<img width="1000" alt="Screenshot 2026-03-10 at 1 42 22 PM" src="https://github.com/user-attachments/assets/91d1a1ec-2e8d-40f1-acf6-df6de2f17a2c" />
+
+From left to right, native SwiftUI app, react native expo, native android kotlin.
+
 The app supports:
 - Browsing a sci-fi catalog
 - Title search and simple filtering
