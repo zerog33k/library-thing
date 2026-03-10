@@ -8,30 +8,35 @@ struct OverdueScreen: View {
   }
 
   var body: some View {
-    ScrollView {
-      VStack(spacing: 10) {
-        if overdue.isEmpty {
-          EmptyStateView(message: "No overdue books.")
-            .padding(.top, 8)
-        } else {
-          if store.uncontactedOverdueCheckouts.isEmpty {
-            Text("No uncontacted overdue books.")
-              .font(.subheadline)
-              .foregroundColor(.secondary)
-              .frame(maxWidth: .infinity, alignment: .leading)
-              .padding(.horizontal, 8)
-          }
-
-          LazyVStack(spacing: 10) {
-            ForEach(overdue) { checkout in
-              OverdueRow(checkout: checkout, store: store)
+    GeometryReader { geometry in
+      ScrollView {
+        VStack(spacing: 10) {
+          if overdue.isEmpty {
+            EmptyStateView(message: "No overdue books.")
+              .padding(.top, 8)
+          } else {
+            if store.uncontactedOverdueCheckouts.isEmpty {
+              Text("No uncontacted overdue books.")
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 8)
             }
+
+            LazyVStack(spacing: 10) {
+              ForEach(overdue) { checkout in
+                OverdueRow(checkout: checkout, store: store)
+              }
+            }
+            .padding(.horizontal, 16)
           }
-          .padding(.horizontal, 16)
         }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .frame(minHeight: geometry.size.height, alignment: .top)
       }
+      .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+      .background(Color(.systemBackground))
     }
-    .contentMargins(.vertical, 0, for: .scrollContent)
     .navigationTitle("Overdue")
     .navigationBarTitleDisplayMode(.inline)
   }
