@@ -96,6 +96,9 @@ This specification defines a concrete React Native implementation for the librar
 ### 3.6 Members screen
 - Read-only list of members and contact identifiers.
 - Used for quick checkout member confirmation.
+- Each member row also shows active checkout summary:
+  - count of checked-out books for that member
+  - list of currently checked-out book titles
 - Empty state: `No members available.`
 
 ### 3.7 Bottom tab behavior
