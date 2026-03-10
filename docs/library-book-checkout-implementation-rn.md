@@ -49,6 +49,7 @@ This specification defines a concrete React Native implementation for the librar
 ### 3.2 Checkout modal
 - Trigger: `Check out` action.
 - Presentation: centered dialog-style modal (non-bottom-sheet), with dimmed backdrop and fixed content card.
+- Modal transition: fade animation.
 - Fields shown:
   - Book title
   - member picker list (required selection)
@@ -67,6 +68,7 @@ This specification defines a concrete React Native implementation for the librar
   - `This member has overdue book(s). Please confirm you have informed them.`
 - Single action:
   - `Confirmed - Member Contacted`
+- Modal transition: fade animation.
 - On confirm:
   - set matching overdue rows to `contacted = true`, `contactedAt = now`
   - continue checkout automatically
