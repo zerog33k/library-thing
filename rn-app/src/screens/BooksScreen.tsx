@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import {
   View,
   Text,
@@ -69,7 +69,7 @@ const BooksListHeader = React.memo(function BooksListHeader({
           <View style={styles.searchField}>
             <Ionicons name="search-outline" size={18} color="#64748b" style={styles.inlineIcon} />
             <TextInput
-              defaultValue={search}
+              value={search}
               onChangeText={onSearchChange}
               placeholder="Search by title"
               style={styles.search}
@@ -110,6 +110,7 @@ export function BooksScreen() {
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null)
   const [checkoutError, setCheckoutError] = useState<string | null>(null)
   const [showSearchPanel, setShowSearchPanel] = useState(false)
+  const booksListRef = useRef<FlatList>(null)
 
   const counts = useAppSelector(selectBookCounts)
 
@@ -224,9 +225,16 @@ export function BooksScreen() {
     })
   }, [navigation, showSearchPanel])
 
+  React.useEffect(() => {
+    if (showSearchPanel) {
+      booksListRef.current?.scrollToOffset({ offset: 0, animated: true })
+    }
+  }, [showSearchPanel])
+
   return (
     <View style={styles.container}>
       <FlatList
+        ref={booksListRef}
         data={filteredBooks}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
