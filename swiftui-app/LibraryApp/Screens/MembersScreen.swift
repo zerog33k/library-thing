@@ -18,10 +18,9 @@ struct MembersScreen: View {
           .padding(.horizontal, 16)
         }
       }
-      .padding(.top, 10)
-      .padding(.bottom, 16)
     }
     .navigationTitle("Members")
+    .navigationBarTitleDisplayMode(.inline)
     .onAppear {
       store.setActiveTab(.members)
     }
@@ -75,4 +74,3 @@ private struct MemberRow: View {
     .clipShape(RoundedRectangle(cornerRadius: 12))
   }
 }
-

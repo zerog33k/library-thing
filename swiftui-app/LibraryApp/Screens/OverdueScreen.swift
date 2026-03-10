@@ -30,10 +30,9 @@ struct OverdueScreen: View {
           .padding(.horizontal, 16)
         }
       }
-      .padding(.top, 10)
-      .padding(.bottom, 16)
     }
     .navigationTitle("Overdue")
+    .navigationBarTitleDisplayMode(.inline)
     .onAppear {
       store.setActiveTab(.overdue)
     }
@@ -92,4 +91,3 @@ private struct OverdueRow: View {
     .clipShape(RoundedRectangle(cornerRadius: 12))
   }
 }
-

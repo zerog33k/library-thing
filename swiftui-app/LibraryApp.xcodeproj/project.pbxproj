@@ -19,6 +19,7 @@
 		A842496169A4235F6FEAE423 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56757CF8BC1804214F864330 /* EmptyStateView.swift */; };
 		AC4B6FEEB9040893A5B80550 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF3FBFE7B23644BEE60ABDE /* ContentView.swift */; };
 		D54F81A0BE3562A5D60489EA /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24BB6B28A660DC776128882C /* Models.swift */; };
+		E051753525DE1261BE5B15B3 /* EmbeddedSeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6C0E1EC89CD8799D5000C5F /* EmbeddedSeedData.swift */; };
 		E87732980B65A58E344EF333 /* OverdueScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA0F72E4EFB317E9174433 /* OverdueScreen.swift */; };
 		FBE07BF40F3880AD4822A021 /* LibraryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6546B312B790AD9C3A12BCD /* LibraryStore.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		889F908093CDBDD6EE2976F1 /* LibraryAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryAppApp.swift; sourceTree = "<group>"; };
 		8A0D1DBDF2D82F8D38BDD7CB /* ReturnModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnModal.swift; sourceTree = "<group>"; };
 		8CF3FBFE7B23644BEE60ABDE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A6C0E1EC89CD8799D5000C5F /* EmbeddedSeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedSeedData.swift; sourceTree = "<group>"; };
 		B17FAC974E2582167943508C /* BookRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRowView.swift; sourceTree = "<group>"; };
 		C6546B312B790AD9C3A12BCD /* LibraryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryStore.swift; sourceTree = "<group>"; };
 		D20A489B0E518492DE089159 /* BooksScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BooksScreen.swift; sourceTree = "<group>"; };
@@ -68,6 +70,7 @@
 				03626DE1D2DE6E0E11B5EE82 /* Views */,
 				8CF3FBFE7B23644BEE60ABDE /* ContentView.swift */,
 				E609C2BE75979E38B6D7FFFF /* DateUtils.swift */,
+				A6C0E1EC89CD8799D5000C5F /* EmbeddedSeedData.swift */,
 				345D2FE685DB227DA2FE969E /* Info.plist */,
 				889F908093CDBDD6EE2976F1 /* LibraryAppApp.swift */,
 				C6546B312B790AD9C3A12BCD /* LibraryStore.swift */,
@@ -170,6 +173,7 @@
 				65FE1A1076819971BBE6B51E /* ContactAcknowledgementModal.swift in Sources */,
 				AC4B6FEEB9040893A5B80550 /* ContentView.swift in Sources */,
 				61D77864A48C074562EE582C /* DateUtils.swift in Sources */,
+				E051753525DE1261BE5B15B3 /* EmbeddedSeedData.swift in Sources */,
 				A842496169A4235F6FEAE423 /* EmptyStateView.swift in Sources */,
 				3F6A6A25213B76E47355BED8 /* LibraryAppApp.swift in Sources */,
 				FBE07BF40F3880AD4822A021 /* LibraryStore.swift in Sources */,

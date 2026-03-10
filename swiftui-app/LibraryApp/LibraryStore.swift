@@ -11,11 +11,8 @@ final class LibraryStore: ObservableObject {
     guard books.isEmpty else {
       return
     }
-    guard let url = Bundle.main.url(forResource: "sci-fi-library-mock-data", withExtension: "json") else {
-      return
-    }
     do {
-      let raw = try Data(contentsOf: url)
+      let raw = try Self.loadSeedJSONData()
       let decoded = try JSONDecoder().decode(LibrarySeed.self, from: raw)
       books = decoded.books
       members = decoded.members
@@ -23,6 +20,17 @@ final class LibraryStore: ObservableObject {
     } catch {
       print("Unable to load seed data: \(error)")
     }
+  }
+
+  private static func loadSeedJSONData() throws -> Data {
+    if let url = Bundle.main.url(forResource: "sci-fi-library-mock-data", withExtension: "json") {
+      do {
+        return try Data(contentsOf: url)
+      } catch {
+        print("Bundle seed file read failed, trying embedded seed: \(error)")
+      }
+    }
+    return Data(embeddedSeedJSON.utf8)
   }
 
   func setActiveTab(_ tab: ActiveTab) {

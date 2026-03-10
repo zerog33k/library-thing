@@ -13,7 +13,7 @@ targets:
     sources:
       - path: LibraryApp
     resources:
-      - path: Resources
+      - path: Resources/sci-fi-library-mock-data.json
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.interview.libraryapp

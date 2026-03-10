@@ -122,8 +122,11 @@ Use value types:
 - `Resources/sci-fi-library-mock-data.json`
 
 ## 10) Local seed strategy
-- Load JSON at launch into `LibraryStore` with defensive decoding.
+- Load JSON into `LibraryStore` at launch with defensive loading:
+  - Attempt `Bundle.main` JSON load first (`sci-fi-library-mock-data.json`).
+  - If bundle load fails, fallback to in-code embedded seed payload so the app still renders data.
 - Convert dates consistently; prefer ISO date strings internally to stay aligned with RN data structure.
+- Tabs and navigation rely on standard SwiftUI `NavigationStack + TabView` components with inline bar style so safe-area behavior matches OS defaults.
 
 ## 11) Acceptance check list
 - Gate appears only when member has at least one active uncontacted overdue checkout.

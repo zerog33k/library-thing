@@ -88,8 +88,6 @@ struct BooksScreen: View {
           }
         }
         .padding(.horizontal, 16)
-        .padding(.top, 10)
-        .padding(.bottom, 18)
       }
       .overlay(alignment: .top, content: {
         if let book = checkoutBook {
@@ -147,6 +145,7 @@ struct BooksScreen: View {
         }
       })
       .navigationTitle("Books")
+      .navigationBarTitleDisplayMode(.inline)
       .toolbar {
         ToolbarItem(placement: .navigationBarTrailing) {
           Button(action: showSearchPanelAction) {
