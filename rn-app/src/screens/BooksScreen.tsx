@@ -277,7 +277,7 @@ export function BooksScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f3f4f6', padding: 12 },
+  container: { flex: 1, backgroundColor: '#f3f4f6' },
   headerAction: {
     width: 40,
     height: 40,
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   },
   filterText: { color: '#334155' },
   filterTextActive: { color: '#fff', fontWeight: '600' },
-  list: { paddingBottom: 20 },
+  list: { paddingHorizontal: 12, paddingTop: 12, paddingBottom: 20 },
   error: {
     color: '#b91c1c',
     textAlign: 'center',
