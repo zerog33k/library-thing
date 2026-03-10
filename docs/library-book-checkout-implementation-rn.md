@@ -32,6 +32,7 @@ This specification defines a concrete React Native implementation for the librar
   - Search input: case-insensitive title filter.
   - Filter chips: `All`, `Available`, `Checked out`, `Overdue`.
   - Tap the search icon again to dismiss the panel.
+- When search panel opens, list auto-scrolls to top so the panel is visible.
 - The books overview text appears once in scrollable content directly below the header and is not duplicated elsewhere.
 - Book card:
   - title, author
