@@ -9,6 +9,7 @@ This document defines a concrete SwiftUI implementation of the library checkout 
 - Member management is read-only.
 - Navigation uses `TabView` with bottom tabs.
 - Modal flows are sheets or alerts.
+- `Info.plist` must define `UILaunchScreen` to avoid iOS compatibility letterboxing on modern devices.
 
 ## 3) Screens and states
 

@@ -27,9 +27,10 @@ targets:
       path: LibraryApp/Info.plist
       properties:
         CFBundleDisplayName: Library App
+        UILaunchScreen: {}
         UIApplicationSupportsIndirectInputEvents: true
         UIApplicationSceneManifest:
-          UIApplicationSupportsMultipleScenes: true
+          UIApplicationSupportsMultipleScenes: false
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
           - UIInterfaceOrientationLandscapeLeft
